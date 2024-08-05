@@ -13,10 +13,9 @@ export const axiosInstance = axios.create({
 axiosInstance.interceptors.request.use(
   (config) => {
     const state = store.getState();
-    const { token, userType } = selectCurrentUser(state);
+    const { token } = selectCurrentUser(state);
     if (token) {
-      config.headers["Authorization"] =
-        userType === "google_user" ? `Bearer ${token}` : `JWT ${token}`;
+      config.headers["Authorization"] = `Bearer ${token}` ;
     }
 
     const { contentType } = config.headers;

@@ -1,18 +1,19 @@
 /** @type {import('tailwindcss').Config} */
-export default {
+module.exports = {
   darkMode: ["class"],
   content: [
-    "./pages/**/*.{ts,tsx,js,jsx}",
-    "./components/**/*.{ts,tsx,js,jsx}",
-    "./app/**/*.{ts,tsx,js,jsx}",
-    "./src/**/*.{ts,tsx,js,jsx}",
+    "./pages/**/*.{ts,tsx}",
+    "./components/**/*.{ts,tsx}",
+    "./app/**/*.{ts,tsx}",
+    "./src/**/*.{ts,tsx}",
   ],
+  prefix: "",
   theme: {
     container: {
       center: true,
-      padding: "1rem",
+      padding: "2rem",
       screens: {
-        "2xl": "1440px",
+        "2xl": "1400px",
       },
     },
     extend: {
@@ -22,7 +23,7 @@ export default {
         rainbow: "url(/assets/images/heroformbg.png)",
         testimonial_card:
           "linear-gradient(91.77deg, #F7F6FB 1.11%, #F7F6FB 42.04%, #F7F6FB 70.51%, rgba(247, 246, 251, 0.6) 98.49%)",
-        ribbon:"url(/assets/images/ribbon.svg)"
+        ribbon: "url(/assets/images/ribbon.svg)",
       },
 
       colors: {
@@ -69,7 +70,21 @@ export default {
         xl: "1280px",
         "2xl": "1536px",
       },
+      keyframes: {
+        "accordion-down": {
+          from: { height: "0" },
+          to: { height: "var(--radix-accordion-content-height)" },
+        },
+        "accordion-up": {
+          from: { height: "var(--radix-accordion-content-height)" },
+          to: { height: "0" },
+        },
+      },
+      animation: {
+        "accordion-down": "accordion-down 0.2s ease-out",
+        "accordion-up": "accordion-up 0.2s ease-out",
+      },
     },
   },
-  plugins: [],
+  plugins: [require("tailwindcss-animate")],
 };

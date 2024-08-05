@@ -18,7 +18,13 @@ body {
 }
 @layer utilities {
   .gradient-text {
-    @apply bg-clip-text text-transparent bg-primary_100;
+    @apply bg-clip-text text-transparent bg-primary_100 ;
+  }
+  .policy-List ul {
+    @apply list-disc px-6 pt-4 flex flex-col gap-2;
+  }
+  .policy-heading h1 {
+    @apply text-xl xs:text-2xl  sm:text-3xl lg:text-4xl  py-6 font-semibold leading-[3rem] sm:leading-[3.75rem];
   }
 }
 
@@ -134,11 +140,3 @@ input[type="number"] {
   font-size: 20px;
   font-weight: 600;
 }
-
-.policy-List ul {
-  @apply list-disc px-6 pt-4 flex flex-col gap-2;
-}
-.policy-heading h1 {
-  @apply text-xl xs:text-2xl sm:text-3xl lg:text-4xl  py-6 font-semibold leading-[3rem] sm:leading-[3.75rem];
-}
-

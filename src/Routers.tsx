@@ -2,6 +2,9 @@ import React, { lazy, Suspense, useEffect } from 'react'
 import { Route, Routes, useLocation } from 'react-router-dom'
 import CommonLayout from './components/layouts/CommonLayout'
 import Loader from './components/shared/Loader'
+import DashboardLayout from './components/layouts/DashboardLayout';
+import Student from './components/dashboard/Student';
+import useDelayedLoader from './components/hooks/useDelayedLoader';
 
 
 const RefundPolicy = lazy(() => import('./pages/policypages/RefundPolicy'));
@@ -23,13 +26,14 @@ const Admin = lazy(() => import('./pages/Admin'))
 
 const Routers = () => {
   const location = useLocation();
+  const showLoader = useDelayedLoader(300);
 
   useEffect(() => {
     window.scrollTo({ top: 0, behavior: 'smooth' });
   }, [location]);
 
   return (
-    <Suspense fallback={<><Loader /></>}>
+    <Suspense fallback={showLoader ? <Loader /> : null}>
       <Routes>
 
         {/* public routes */}
@@ -40,6 +44,7 @@ const Routers = () => {
         {/* <Route path='/reviews' element={<Reviews />} />
         <Route path='/samples' element={<Samples />} /> */}
 
+
         {/* policy routes */}
         <Route path='/terms-and-conditions' element={<TermsAndConditions />} />
         <Route path='/privacy-policy' element={<PrivacyPolicy />} />
@@ -47,12 +52,15 @@ const Routers = () => {
         <Route path='/fair-use-policy' element={<FairUse />} />
 
 
-
         {/* admin routes */}
         <Route path='/admin' element={<AdminLayout><Admin /></AdminLayout>} />
         <Route path='/admin/all-orders' element={<AdminLayout><OrderTable /></AdminLayout>} />
         <Route path='/admin/all-payments' element={<AdminLayout><PaymentTable /></AdminLayout>} />
         <Route path='/admin/order-payment/:id' element={<AdminLayout><PaymentTable /></AdminLayout>} />
+
+        {/* Dashboard routes */}
+        <Route path='/dashboard' element={<DashboardLayout>{<><Student /></>}</DashboardLayout>} />
+
 
 
         <Route path='*' element={<CommonLayout><NotFound /></CommonLayout>} />

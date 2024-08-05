@@ -13,7 +13,7 @@ const Loader = ({ className }: { className?: string }) => {
         };
     }, []);
     return (
-        <div className={cn('fixed flex justify-center items-center h-full -translate-x-1/2 -translate-y-1/2 left-1/2 top-1/2 bg-white w  z-[1000] w-full', className)}>
+        <div className={cn('fixed flex justify-center items-center h-full -translate-x-1/2 -translate-y-1/2 left-1/2 top-1/2 bg-white   z-[1000] w-full', className)}>
             <div className={"loader z-50"}>
                 <div className="circle"></div>
                 <div className="circle"></div>

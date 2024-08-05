@@ -8,15 +8,14 @@ import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { boolean, z } from 'zod';
 import GradientButton from './inputs/GradientButton';
-import Button from './inputs/Button';
-import google from '/assets/icons/Google.svg'
-import { useGoogleLogin } from '@react-oauth/google';
+
 import { useDispatch, useSelector } from 'react-redux';
 import { selectCurrentUser, setCredentials } from '../redux/slices/user.slice';
 import Loader from './shared/Loader';
 import { toast } from 'react-toastify';
-import { jwtDecode } from 'jwt-decode';
+// import { jwtDecode } from 'jwt-decode';
 import { getNewAccessToken, getRefreshToken } from './utils/TokenConfig';
+import { jwtDecode } from 'jwt-decode';
 
 
 // Define Zod schema for form data
@@ -71,13 +70,16 @@ const Login = () => {
             const res = await resdata.json()
 
             if (resdata.ok && res.data && res.data.token) {
-                dispatch(setCredentials({ token: res.data.token, userType: "app_user" }))
+
+                const userToken = jwtDecode<UserTokenInfo>(res.data.token)
+
+                dispatch(setCredentials({ token: res.data.token, userType: "app_user", userInfo: userToken }))
                 toast.success("Login Successfully")
                 navigate(prevState || '/')
                 return;
             }
 
-            if (resdata.status === 401) {
+            if (resdata.status === 401 || resdata.status === 400) {
                 reset()
                 return toast.error("Invalid credentials")
             }
@@ -104,60 +106,60 @@ const Login = () => {
     }
     // const SCOPE = 'https://mail.google.com/';
 
-    const handleGoogleLogin = useGoogleLogin({
-        scope: 'profile',
-        flow: 'auth-code',
-        onSuccess: async (codeResponse) => {
-            try {
+    // const handleGoogleLogin = useGoogleLogin({
+    //     scope: 'profile',
+    //     flow: 'auth-code',
+    //     onSuccess: async (codeResponse) => {
+    //         try {
 
-                const refreshToken = await getRefreshToken(codeResponse, saveAuthDetails);
-                const newAccessToken = await getNewAccessToken(refreshToken, saveAccessToken);
+    //             const refreshToken = await getRefreshToken(codeResponse, saveAuthDetails);
+    //             const newAccessToken = await getNewAccessToken(refreshToken, saveAccessToken);
 
-                if (newAccessToken) {
-                    setIsLoading(true);
-                    const data: any = await fetch(`${import.meta.env.VITE_BASE_URL}/auth/google-verification`, {
-                        method: "POST",
-                        headers: {
-                            "Authorization": 'Bearer ' + newAccessToken
-                        }
-                    });
-                    if (data.ok) {
-                        localStorage.setItem("customer_id", data.accountId);
-                        toast.success("Login successfully");
-                        navigate(prevState || '/');
+    //             if (newAccessToken) {
+    //                 setIsLoading(true);
+    //                 const data: any = await fetch(`${import.meta.env.VITE_BASE_URL}/auth/google-verification`, {
+    //                     method: "POST",
+    //                     headers: {
+    //                         "Authorization": 'Bearer ' + newAccessToken
+    //                     }
+    //                 });
+    //                 if (data.ok) {
+    //                     localStorage.setItem("customer_id", data.accountId);
+    //                     toast.success("Login successfully");
+    //                     navigate(prevState || '/');
 
-                    } else {
-                        toast.error('Verification failed');
-                    }
-                } else {
-                    toast.error('Failed to retrieve new access token');
-                }
-            } catch (err) {
-                toast.error("Something went wrong");
-            } finally {
-                setIsLoading(false);
-            }
-        },
-        onError: () => {
-            toast.error("Something went wrong");
-        }
-    });
+    //                 } else {
+    //                     toast.error('Verification failed');
+    //                 }
+    //             } else {
+    //                 toast.error('Failed to retrieve new access token');
+    //             }
+    //         } catch (err) {
+    //             toast.error("Something went wrong");
+    //         } finally {
+    //             setIsLoading(false);
+    //         }
+    //     },
+    //     onError: () => {
+    //         toast.error("Something went wrong");
+    //     }
+    // });
 
 
     if (isLoading) {
         return <Loader />
     }
     return (
-        <section className='grid grid-cols-1 md:grid-cols-3  lg:grid-cols-8 xl:grid-cols-12 gap-10 min-h-screen relative '>
+        <section className='flex gap-4  relative h-screen'>
 
-            <div className='col-span-1 lg:col-span-3 xl:col-span-3 '>
+            <div className='w-full mx-auto lg:w-[360px]'>
                 <Link to={state || '/'} className='my-6 inline-block max-sm:px-10 max-md:px-20 md:pl-10'><img src={chevronLeft} alt="" className='w-10 cursor-pointer' /></Link>
-                <div className=' flex justify-center flex-col  max-sm:px-10 max-md:px-20 md:pl-10 gap-8 mx-auto w-full '>
-                    <div className='flex gap-2 max-md:justify-center'>
+                <div className=' flex justify-center flex-col  max-sm:px-10 max-lg:px-20 md:pl-10 gap-8 mx-auto w-full  p-10'>
+                    <div className='flex gap-2 max-lg:justify-center'>
                         <img src={logo} alt="" className='w-44' />
                         {/* <h1 className='text-xl lg:text-2xl text-[#1F1F1F] font-medium'>AssignmentHelper</h1> */}
                     </div>
-                    <h1 className='text-2xl font-medium lg:text-3xl max-md:text-center text-nowrap'>
+                    <h1 className='text-2xl font-medium lg:text-3xl max-lg:text-center text-nowrap'>
                         Welcome back,<br /> <span className='gradient-text'>Login in</span>
                     </h1>
                     <form className='flex flex-col gap-8' onSubmit={handleSubmit(onSubmit)}>
@@ -166,18 +168,18 @@ const Login = () => {
                         <GradientButton className='w-full' bgClassName='text-lg md:text-xl' type="submit">Log in</GradientButton>
                     </form>
 
-                    <Button className='flex items-center gap-2 justify-center border-2 p-2 h-12 rounded-2xl border-black active:scale-95 ease-in-out duration-150' onClick={() => handleGoogleLogin()}><img src={google} alt="" /><p className=' text-base sm:text-[15px] text-lg lg:text-xl text-nowrap  text-black font-medium'>Sign in with Google</p>
-                    </Button>
+                    {/* <Button className='flex items-center gap-2 justify-center border-2 p-2 h-12 rounded-2xl border-black active:scale-95 ease-in-out duration-150' onClick={() => handleGoogleLogin()}><img src={google} alt="" /><p className=' text-base sm:text-[15px] text-lg lg:text-xl text-nowrap  text-black font-medium'>Sign in with Google</p>
+                    </Button> */}
 
                     <p className='text-center text-[#0000007D]'>
                         <span className='text-nowrap'>Don’t have an account ?</span> <Link to={'/signup'} className='text-black hover:underline text-nowrap'>Sign up</Link></p>
 
                 </div>
             </div>
-            <div className=' md:col-span-2 lg:col-span-5 xl:col-span-9  m-3 rounded-br-[4rem] rounded-tl-[4rem] overflow-hidden relative bg-primary_100 p-[1px] hidden md:block'>
+            <div className='flex-1  m-3 rounded-br-[4rem] rounded-tl-[4rem] overflow-hidden relative bg-primary_100 p-[1px] hidden lg:block'>
                 <div className='h-full w-full bg-white rounded-br-[3.91rem] rounded-tl-[3.91rem] flex flex-col justify-around items-center '>
-                    <img src={loginImg} alt="" className='mx-auto w-[40vw]' />
-                    <h1 className='gradient-text text-2xl lg:text-3xl font-medium text-center'>&quot;Empowering academic success,<br /> one assignment at a time.&quot;</h1>
+                    <img src={loginImg} alt="" className='mx-auto h-[450px]' />
+                    <h1 className='gradient-text text-2xl lg:text-3xl font-medium text-center mt-8'>&quot;Empowering academic success,<br /> one assignment at a time.&quot;</h1>
                 </div>
             </div>
             {isLoading && <Loader />}

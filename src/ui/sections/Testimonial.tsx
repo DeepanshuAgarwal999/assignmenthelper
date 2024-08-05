@@ -163,7 +163,8 @@ const Testimonial = () => {
                             </div>
                             <span className='text-sm text-[#929090] pl-16'>user, 24.03.02</span>
                         </article></SwiperSlide>
-                    <SwiperSlide><article className=' p-6 bg-[#E3E3E3] h-[260px]'>
+                    <SwiperSlide>
+                        <article className=' p-6 bg-[#E3E3E3] h-[260px]'>
                         <div className='flex gap-4'>
                             <img src={yasminImg} alt="" className='self-start' />
                             <div>
@@ -176,8 +177,9 @@ const Testimonial = () => {
                                 </p>
                             </div>
                         </div>
-                        <span className='text-[#929090] pl-16'>user, 24.03.02</span>
-                    </article></SwiperSlide>
+                        <span className='text-[#929090] pl-16 text-sm'>user, 24.03.02</span>
+                    </article>
+                    </SwiperSlide>
                     <SwiperSlide> <article className=' p-6  bg-[#F7F6FB] h-[260px]'>
                         <div className='flex gap-4'>
                             <img src={sakshiImg} alt="" className='self-start' />
@@ -186,8 +188,8 @@ const Testimonial = () => {
                                     <h1 className='text-2xl font-semibold'>Sakshi</h1>
                                     <img src={rating} alt="" />
                                 </div>
-                                <p className='py-4 max-sm:text-sm'>
-                                    &quot;Exceptional nursing assignment service! The content was meticulously researched, professionally written, and tailored perfectly to my needs. Delivery was prompt, and the support team was responsive and helpful. Highly recommended for nursing students! &quot;
+                                <p className='py-2 max-sm:text-sm  '>
+                                    &quot;Exceptional nursing assignment service! The content was meticulously researched, professionally written, and tailored perfectly to my needs. Highly recommended for nursing students! &quot;
                                 </p>
                             </div>
                         </div>

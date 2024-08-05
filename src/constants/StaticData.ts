@@ -115,5 +115,151 @@ const TopFeatureCardData = [
       "Feel free to get in touch with our academic writers whenever you want. Send in your queries, and they'll get back to you ASAP.",
   },
 ];
+const Countries = [
+  {
+    name: "UK",
+    cities: [
+      "London",
+      "Birmingham",
+      "Manchester",
+      "Croydon",
+      "Leeds",
+      "Leicester",
+      "Liverpool",
+      "Luton",
+      "Sheffield",
+    ],
+  },
+  {
+    name: "Canada",
+    cities: [
+      "London",
+      "Birmingham",
+      "Manchester",
+      "Croydon",
+      "Leeds",
+      "Leicester",
+      "Liverpool",
+      "Luton",
+      "Sheffield",
+    ],
+  },
+  {
+    name: "US",
+    cities: [
+      "London",
+      "Birmingham",
+      "Manchester",
+      "Croydon",
+      "Leeds",
+      "Leicester",
+      "Liverpool",
+      "Luton",
+      "Sheffield",
+    ],
+  },
+  {
+    name: "UAE",
+    cities: [
+      "London",
+      "Birmingham",
+      "Manchester",
+      "Croydon",
+      "Leeds",
+      "Leicester",
+      "Liverpool",
+      "Luton",
+      "Sheffield",
+    ],
+  },
+  {
+    name: "Singapore",
+    cities: [
+      "London",
+      "Birmingham",
+      "Manchester",
+      "Croydon",
+      "Leeds",
+      "Leicester",
+      "Liverpool",
+      "Luton",
+      "Sheffield",
+    ],
+  },
+  {
+    name: "NZ",
+    cities: [
+      "London",
+      "Birmingham",
+      "Manchester",
+      "Croydon",
+      "Leeds",
+      "Leicester",
+      "Liverpool",
+      "Luton",
+      "Sheffield",
+    ],
+  },
+  {
+    name: "China",
+    cities: [
+      "London",
+      "Birmingham",
+      "Manchester",
+      "Croydon",
+      "Leeds",
+      "Leicester",
+      "Liverpool",
+      "Luton",
+      "Sheffield",
+    ],
+  },
+  {
+    name: "Malaysia",
+    cities: [
+      "London",
+      "Birmingham",
+      "Manchester",
+      "Croydon",
+      "Leeds",
+      "Leicester",
+      "Liverpool",
+      "Luton",
+      "Sheffield",
+    ],
+  },
+  {
+    name: "India",
+    cities: [
+      "London",
+      "Birmingham",
+      "Manchester",
+      "Croydon",
+      "Leeds",
+      "Leicester",
+      "Liverpool",
+      "Luton",
+      "Sheffield",
+    ],
+  },
+];
 
-export { AssignmentHelpingData, TopFeatureCardData };
+const testimonials = [
+  {
+    id: "NAH_AU45764",
+    location: "Sydney - Australia",
+    ratingSrc:
+      "https://www.newassignmenthelpaus.com/assets/images/home/4.5_star.png",
+    text: `I was having a lot of issues writing with my lengthy assignment and after taking their service, I got into contact with their customer support staff. They understood my issues with the length and assigned a PhD expert to me. With her help, I was able to complete my 20000-word assignment in just over 3 days. I truly appreciate the help of Miss Claudia and the New Assignment Help.`,
+  },
+  {
+    id: "NAH_AU45763",
+    location: "Sydney - Australia",
+    ratingSrc:
+      "https://www.newassignmenthelpaus.com/assets/images/home/4.5_star.png",
+    text: `I have been on the lookout for a job. But even after applying for months I still couldn't get one. Turns out it was because of my resume and its poor format. Since I had no idea how to make it, I simply asked for help from these guys. Professor Carter made me a suitable resume through which I have 3 interviews in the next week.`,
+  },
+  // Add other testimonials here
+];
+
+export { AssignmentHelpingData, TopFeatureCardData, Countries, testimonials };

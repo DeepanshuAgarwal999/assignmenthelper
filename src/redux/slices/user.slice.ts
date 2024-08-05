@@ -1,12 +1,13 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { RootState } from "../Store";
-import { googleLogout } from "@react-oauth/google";
+// import { googleLogout } from "@react-oauth/google";
 import { userType } from "../../interfaces/user.type";
 
 const initialState: UserState = {
   token: null,
   userType: null,
   refresh_token: null,
+  userInfo: null,
 };
 
 const userSlice = createSlice({
@@ -14,8 +15,9 @@ const userSlice = createSlice({
   initialState,
   reducers: {
     setCredentials: (state, action) => {
-      const { token, refresh_token, userType } = action.payload;
+      const { token, refresh_token, userType, userInfo } = action.payload;
       state.token = token;
+      state.userInfo = userInfo;
       state.userType = userType as userType;
       if (refresh_token) {
         state.refresh_token = refresh_token;
@@ -25,9 +27,10 @@ const userSlice = createSlice({
       state.token = null;
       state.userType = null;
       state.refresh_token = null;
-      // window.location.href = "/";
-      if (state.userType && state.userType === "google_user") googleLogout();
+      state.userInfo = null;
       localStorage.clear();
+      // window.location.href = "/";
+      // if (state.userType && state.userType === "google_user") googleLogout();
     },
   },
 });
