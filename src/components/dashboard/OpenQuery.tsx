@@ -4,11 +4,14 @@ import { axiosInstance } from '../utils/axios.instance';
 import { formatDate } from '../table/DashboardOrderTable';
 import { Textarea } from '../ui/textarea';
 import { convertTimestampToDate } from '@/lib/utils';
+import DashboardLoader from '../shared/DashboardLoader';
 
 const OpenQuery = () => {
     const { customerId, id } = useParams()
     const navigate = useNavigate();
     const [query, setQuery] = useState<TypeAssignment | null>(null)
+    const [isLoading, setIsLoading] = useState<boolean>(false);
+
     useEffect(() => {
         if (!id || !customerId) {
             navigate('/dashboard')
@@ -17,6 +20,7 @@ const OpenQuery = () => {
         else {
             (async () => {
                 try {
+                    setIsLoading(true)
                     const { data } = await axiosInstance.get(`/customer/${customerId}/get-query/${id}`)
                     if (data) {
                         setQuery(data.data)
@@ -24,11 +28,17 @@ const OpenQuery = () => {
                 } catch (error) {
                     console.log(error)
                 }
+                finally {
+                    setIsLoading(false)
+                }
             })()
         }
     }, [])
     console.log(query)
 
+    if (isLoading) {
+        <DashboardLoader />
+    }
 
 
     return (
@@ -71,7 +81,7 @@ const OpenQuery = () => {
                     </div>
                 </dl>
                 <Textarea value={query?.description} readOnly className='outline-none mt-8 border-gray-100 focus:border-gray-50 min-h-[100px]' />
-               
+
             </div>
         </>
     )

@@ -19,7 +19,6 @@ import {
 } from "@tanstack/react-table"
 
 import { Button } from "@/components/ui/button"
-import { Checkbox } from "@/components/ui/checkbox"
 import {
     DropdownMenu,
     DropdownMenuCheckboxItem,
@@ -39,7 +38,6 @@ import {
     TableRow,
 } from "@/components/ui/table"
 import { Link } from "react-router-dom"
-import { axiosInstance } from "../utils/axios.instance"
 import { store } from "@/redux/Store"
 import { selectCurrentUser } from "@/redux/slices/user.slice"
 
@@ -135,13 +133,13 @@ export const columns: ColumnDef<TypeAssignment>[] = [
                     onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
                 >
                     File name
-                    <CaretSortIcon className="ml-2 h-4 w-4" />
+                    <CaretSortIcon className="ml-2 h-4 w-4 " />
                 </Button>
             )
         },
         cell: ({ row }) => {
 
-            return <div className="text-right font-medium">{row.getValue("file_name")}</div>
+            return <div className="text-right font-medium w-[100px] truncate">{row.getValue("file_name")}</div>
         },
     },
     {
@@ -162,7 +160,7 @@ export const columns: ColumnDef<TypeAssignment>[] = [
                         <DropdownMenuLabel>Actions</DropdownMenuLabel>
 
                         <DropdownMenuItem><Link to={`/dashboard/customer/${assignment.customer_id}/query/${assignment.id}`}>Open Query</Link></DropdownMenuItem>
-                        <DropdownMenuItem onClick={() => handleFileDownload(assignment.id)}>Download Query</DropdownMenuItem>
+                        <DropdownMenuItem onClick={() => handleFileDownload(assignment.id,assignment.file_name)}>Download Query</DropdownMenuItem>
                         <DropdownMenuItem onClick={() => handleOrder(assignment.customer_id, assignment.id)}>Order</DropdownMenuItem>
                         <DropdownMenuSeparator />
 
@@ -172,7 +170,7 @@ export const columns: ColumnDef<TypeAssignment>[] = [
         },
     },
 ]
-const handleFileDownload = async (customerID: string) => {
+const handleFileDownload = async (customerID: string,fileName:string) => {
     const state = store.getState();
     const { token } = selectCurrentUser(state);
     try {
@@ -185,6 +183,16 @@ const handleFileDownload = async (customerID: string) => {
         if (res.status == 400) {
             const data = await res.json();
             console.log(data)
+        }
+        else {
+            const blob = await res.blob();
+            const downloadUrl = window.URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = downloadUrl;
+            a.download = fileName; // You can set the file name here
+            document.body.appendChild(a);
+            a.click();
+            a.remove();
         }
         // console.log(data)
     }

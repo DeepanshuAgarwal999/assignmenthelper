@@ -8,6 +8,8 @@ import useDelayedLoader from './components/hooks/useDelayedLoader';
 import Student from './components/dashboard/Student';
 import Orders from './components/dashboard/Orders';
 import OpenQuery from './components/dashboard/OpenQuery';
+import ChangeUserPassword from './pages/ChangeUserPassword';
+import ResetPassword from './components/ResetPassword';
 
 
 const RefundPolicy = lazy(() => import('./pages/policypages/RefundPolicy'));
@@ -44,6 +46,8 @@ const Routers = () => {
         <Route path='/profile' element={<Profile />} />
         <Route path='/login' element={<Login />} />
         <Route path='/signup' element={<SignUp />} />
+        <Route path='/change-password' element={<ChangeUserPassword />} />
+        <Route path='/reset-password' element={<ResetPassword />} />
         {/* <Route path='/reviews' element={<Reviews />} />
         <Route path='/samples' element={<Samples />} /> */}
 

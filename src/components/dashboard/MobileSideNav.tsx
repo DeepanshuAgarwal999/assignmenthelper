@@ -9,6 +9,7 @@ import { useDispatch } from 'react-redux'
 import { logOut } from '@/redux/slices/user.slice'
 import { toast } from 'react-toastify'
 import { Popover, PopoverContent, PopoverTrigger } from '../ui/popover'
+import { KeyRoundIcon } from 'lucide-react'
 
 
 const MobileSideNav = () => {
@@ -156,9 +157,10 @@ const MobileSideNav = () => {
             <Popover >
                 <PopoverTrigger><ChevronDownIcon className={'text-gray-800  size-4 shrink-0'} />
                 </PopoverTrigger>
-                <PopoverContent className='mr-2 mt-4 w-40 lg:hidden'>
-                    <div className='flex flex-col'>
+                <PopoverContent className='mr-2 mt-4 w-56 lg:hidden'>
+                    <div className='flex flex-col gap-2'>
                         <button onClick={handleLogout} className='flex items-center gap-2 active:text-red-500 ease-in-out duration-150'><ArrowLeftEndOnRectangleIcon className='size-5' />Log Out</button>
+                            <button onClick={() => navigate('/change-password')} className='flex items-center gap-2 active:text-yellow-500 ease-in-out duration-150'><KeyRoundIcon className='size-5' />Change password</button>
                     </div>
                 </PopoverContent>
             </Popover>

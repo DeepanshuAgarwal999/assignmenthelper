@@ -26,6 +26,9 @@ body {
   .policy-heading h1 {
     @apply text-xl xs:text-2xl  sm:text-3xl lg:text-4xl  py-6 font-semibold leading-[3rem] sm:leading-[3.75rem];
   }
+    .shad-otp-slot {
+    @apply sm:text-lg justify-center flex border border-purple-500 rounded-lg size-6 sm:size-11 gap-2 sm:gap-4 !important;
+  }
 }
 
 /* loader */
