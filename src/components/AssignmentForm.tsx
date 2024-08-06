@@ -9,7 +9,7 @@ const PhoneInputWithCountry = React.lazy(() => import("react-phone-number-input/
 import { ACCEPTED_FILE_TYPES, References } from '../constants/FormData';
 import 'react-phone-number-input/style.css'
 import { toast } from 'react-toastify';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { selectCurrentUser } from '../redux/slices/user.slice';
 import Loader from './shared/Loader';
 import isTokenExpired from '../constants/Token.expire';
@@ -17,6 +17,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import Modal from './inputs/Modal';
 import { jwtDecode } from 'jwt-decode';
 import { UploadCloud } from 'lucide-react';
+import { setQueries } from '@/redux/slices/query.slice';
 
 
 const today = new Date();
@@ -76,7 +77,7 @@ const AssignmentForm = () => {
   const [fileName, setFileName] = useState<string | null>(null)
   const [email, setEmail] = useState(null)
   const [decoded_token, setDecoded_token] = useState<any | undefined>(undefined)
-
+  const dispatch = useDispatch()
   const {
     register,
     handleSubmit,
@@ -157,7 +158,7 @@ const AssignmentForm = () => {
     // }
 
     const { files: file, agreeToTerms, ...values } = data;
-
+    console.log(decoded_token.accountId)
     const query = JSON.stringify(
       { ...values, customer_id: decoded_token.accountId }
     );
@@ -200,6 +201,7 @@ const AssignmentForm = () => {
           toast.success("Form Submitted Successfully")
           navigate('/dashboard')
           setFileName(null)
+          dispatch(setQueries(null))
           reset();
         }
         else {
@@ -248,7 +250,7 @@ const AssignmentForm = () => {
               })} error={errors.deadline?.message} />
 
               <div className='flex items-center gap-4 w-full '>
-                <FormTextField title='Enter the total Pages / words' className='' {...register("page_or_word", {
+                <FormTextField title='Enter the total Pages / words' className='' {...register("pageOrWord", {
                   valueAsNumber: true,
                   required: true
                 })} error={errors.pageOrWord?.message} type='number' />

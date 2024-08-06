@@ -2,6 +2,7 @@ import { persistReducer, persistStore } from "redux-persist";
 import { configureStore, combineReducers } from "@reduxjs/toolkit";
 import userReducer from "./slices/user.slice";
 import createWebStorage from "redux-persist/lib/storage/createWebStorage";
+import queryReducer from "./slices/query.slice";
 
 type NoopStorage = {
   getItem(_key: string): Promise<null>;
@@ -38,6 +39,7 @@ const persistConfig = {
 
 const rootReducer = combineReducers({
   user: userReducer,
+  queries: queryReducer,
 });
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);

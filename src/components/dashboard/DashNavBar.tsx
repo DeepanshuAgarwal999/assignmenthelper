@@ -10,13 +10,16 @@ import { ArrowLeftEndOnRectangleIcon } from '@heroicons/react/20/solid'
 import { useDispatch } from 'react-redux'
 import { logOut } from '@/redux/slices/user.slice'
 import { toast } from 'react-toastify'
+import { useNavigate } from 'react-router-dom'
 
 const DashNavBar = () => {
-    const dispatch =useDispatch();
-   const handleLogout=()=>{
-       dispatch(logOut())
-       toast.success("Logout Successfully")
-   }
+    const dispatch = useDispatch();
+    const navigate = useNavigate();
+    const handleLogout = () => {
+        dispatch(logOut())
+        toast.success("Logout Successfully")
+        navigate('/')
+    }
     return (
         <div className='max-lg:hidden fixed xl:pl-72 py-4 w-full border-b border-gray-200 bg-white px-6'>
             <div className='flex items-center gap-2 justify-end '>

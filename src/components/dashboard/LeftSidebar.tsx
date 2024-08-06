@@ -11,7 +11,9 @@ export function classNames(...classes: string[]) {
 const LeftSidebar = () => {
     return (
         <div>
-            <MobileSideNav />
+            <div className='lg:hidden'>
+                <MobileSideNav />
+            </div>
             {/* Static sidebar for desktop */}
             <div className="hidden lg:fixed lg:inset-y-0 lg:z-50 lg:flex lg:w-72 lg:flex-col">
                 {/* Sidebar component, swap this element with another sidebar if you like */}
@@ -27,6 +29,7 @@ const LeftSidebar = () => {
                                         <li key={item.name}>
                                             <NavLink
                                                 to={item.href}
+                                                end={item.href === '/dashboard'}
                                                 className={({ isActive }) =>
                                                     classNames(
                                                         isActive ? 'bg-gray-50 text-purple-500' : 'text-gray-700 hover:text-purple-500 hover:bg-gray-50',
@@ -51,7 +54,7 @@ const LeftSidebar = () => {
                                     ))}
                                 </ul>
                             </li>
-                           
+
 
                         </ul>
                     </nav>

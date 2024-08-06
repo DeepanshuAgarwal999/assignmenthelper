@@ -2,13 +2,24 @@ import React, { Fragment, useState } from 'react'
 import { Dialog, Transition } from '@headlessui/react'
 import { navigation, teams } from '../../constants/dashboard/navigation'
 import { classNames } from './LeftSidebar'
-import { Bars3Icon, XMarkIcon } from '@heroicons/react/24/outline'
-import { Link } from 'react-router-dom'
+import { ArrowLeftEndOnRectangleIcon, Bars3Icon, ChevronDownIcon, XMarkIcon } from '@heroicons/react/24/outline'
+import { Link, NavLink, useNavigate } from 'react-router-dom'
 import Logo from '/assets/images/logo.jpg'
+import { useDispatch } from 'react-redux'
+import { logOut } from '@/redux/slices/user.slice'
+import { toast } from 'react-toastify'
+import { Popover, PopoverContent, PopoverTrigger } from '../ui/popover'
 
 
 const MobileSideNav = () => {
     const [sidebarOpen, setSidebarOpen] = useState(false)
+    const dispatch = useDispatch();
+    const navigate = useNavigate()
+    const handleLogout = () => {
+        dispatch(logOut())
+        toast.success("Logout Successfully")
+        navigate('/')
+    }
     return (
         <div>
             <Transition.Root show={sidebarOpen} as={Fragment}>
@@ -63,24 +74,29 @@ const MobileSideNav = () => {
                                                 <ul role="list" className="-mx-2 space-y-1">
                                                     {navigation.map((item) => (
                                                         <li key={item.name}>
-                                                            <a
-                                                                href={item.href}
-                                                                className={classNames(
-                                                                    item.current
-                                                                        ? 'bg-gray-50 text-purple-600'
-                                                                        : 'text-gray-700 hover:text-purple-600 hover:bg-gray-50',
-                                                                    'group flex gap-x-3 rounded-md p-2 text-sm leading-6 font-semibold'
-                                                                )}
+                                                            <NavLink
+                                                                to={item.href}
+                                                                end={item.href === '/dashboard'}
+                                                                className={({ isActive }) =>
+                                                                    classNames(
+                                                                        isActive ? 'bg-gray-50 text-purple-500' : 'text-gray-700 hover:text-purple-500 hover:bg-gray-50',
+                                                                        'group flex gap-x-3 rounded-md p-2 text-sm leading-6 font-semibold'
+                                                                    )
+                                                                }
                                                             >
-                                                                <item.icon
-                                                                    className={classNames(
-                                                                        item.current ? 'text-purple-500' : 'text-gray-400 group-hover:text-purple-600',
-                                                                        'h-6 w-6 shrink-0'
-                                                                    )}
-                                                                    aria-hidden="true"
-                                                                />
-                                                                {item.name}
-                                                            </a>
+                                                                {({ isActive }) => (
+                                                                    <>
+                                                                        <item.icon
+                                                                            className={classNames(
+                                                                                isActive ? 'text-purple-500' : 'text-gray-400 group-hover:text-purple-500',
+                                                                                'h-6 w-6 shrink-0'
+                                                                            )}
+                                                                            aria-hidden="true"
+                                                                        />
+                                                                        {item.name}
+                                                                    </>
+                                                                )}
+                                                            </NavLink>
                                                         </li>
                                                     ))}
                                                 </ul>
@@ -137,6 +153,15 @@ const MobileSideNav = () => {
                         alt=""
                     />
                 </a>
+            <Popover >
+                <PopoverTrigger><ChevronDownIcon className={'text-gray-800  size-4 shrink-0'} />
+                </PopoverTrigger>
+                <PopoverContent className='mr-2 mt-4 w-40 lg:hidden'>
+                    <div className='flex flex-col'>
+                        <button onClick={handleLogout} className='flex items-center gap-2 active:text-red-500 ease-in-out duration-150'><ArrowLeftEndOnRectangleIcon className='size-5' />Log Out</button>
+                    </div>
+                </PopoverContent>
+            </Popover>
             </div>
 
         </div>

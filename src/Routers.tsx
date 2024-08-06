@@ -3,8 +3,11 @@ import { Route, Routes, useLocation } from 'react-router-dom'
 import CommonLayout from './components/layouts/CommonLayout'
 import Loader from './components/shared/Loader'
 import DashboardLayout from './components/layouts/DashboardLayout';
-import Student from './components/dashboard/Student';
 import useDelayedLoader from './components/hooks/useDelayedLoader';
+
+import Student from './components/dashboard/Student';
+import Orders from './components/dashboard/Orders';
+import OpenQuery from './components/dashboard/OpenQuery';
 
 
 const RefundPolicy = lazy(() => import('./pages/policypages/RefundPolicy'));
@@ -60,6 +63,8 @@ const Routers = () => {
 
         {/* Dashboard routes */}
         <Route path='/dashboard' element={<DashboardLayout>{<><Student /></>}</DashboardLayout>} />
+        <Route path='/dashboard/orders' element={<DashboardLayout>{<><Orders /></>}</DashboardLayout>} />
+        <Route path='/dashboard/customer/:customerId/query/:id' element={<DashboardLayout>{<><OpenQuery /></>}</DashboardLayout>} />
 
 
 

@@ -7,12 +7,11 @@ import {
   UsersIcon,
 } from "@heroicons/react/24/outline";
 export const navigation = [
-  { name: "Dashboard", href: "/dashboard", icon: HomeIcon, current: true },
+  { name: "Dashboard", href: "/dashboard", icon: HomeIcon },
   {
     name: "Orders",
-    href: "/orders",
+    href: "/dashboard/orders",
     icon: DocumentDuplicateIcon,
-    current: false,
   },
 ];
 export const teams = [
