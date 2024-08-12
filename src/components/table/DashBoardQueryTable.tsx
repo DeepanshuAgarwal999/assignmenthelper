@@ -170,7 +170,7 @@ export const columns: ColumnDef<TypeAssignment>[] = [
         },
     },
 ]
-const handleFileDownload = async (customerID: string,fileName:string) => {
+const handleFileDownload = async (customerID: string,fileName:string | null) => {
     const state = store.getState();
     const { token } = selectCurrentUser(state);
     try {
@@ -189,7 +189,7 @@ const handleFileDownload = async (customerID: string,fileName:string) => {
             const downloadUrl = window.URL.createObjectURL(blob);
             const a = document.createElement('a');
             a.href = downloadUrl;
-            a.download = fileName; // You can set the file name here
+            a.download = fileName || 'query.pdf'; // You can set the file name here
             document.body.appendChild(a);
             a.click();
             a.remove();
