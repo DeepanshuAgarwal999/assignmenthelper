@@ -97,7 +97,7 @@ export const columns: ColumnDef<TypeOrderDetails>[] = [
                 <div className="">Order date</div>
             )
         },
-        cell: ({ row }) => <div className="uppercase">{convertTimestampToDate(row.getValue("order_datetime"))}</div>,
+        cell: ({ row }) => <div className="capitalize">{convertTimestampToDate(row.getValue("order_datetime"))}</div>,
     },
 
     {

@@ -158,6 +158,7 @@ const AssignmentForm = () => {
     // }
 
     const { files: file, agreeToTerms, ...values } = data;
+    console.log(data)
     const query = JSON.stringify(
       { ...values, customer_id: decoded_token.accountId }
     );

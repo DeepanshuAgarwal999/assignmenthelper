@@ -61,7 +61,7 @@ export const columns: ColumnDef<TypeAssignment>[] = [
                 <div className="">Deadline</div>
             )
         },
-        cell: ({ row }) => <div className="capitalize">{convertTimestampToDate(row.getValue("deadline"))}</div>,
+        cell: ({ row }) => <div className="capitalize">{new Date(row.getValue("deadline")).toDateString()}</div>,
     },
     {
         accessorKey: "subject",
