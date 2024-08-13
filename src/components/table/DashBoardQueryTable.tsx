@@ -40,6 +40,7 @@ import {
 import { Link } from "react-router-dom"
 import { store } from "@/redux/Store"
 import { selectCurrentUser } from "@/redux/slices/user.slice"
+import { convertTimestampToDate } from "@/lib/utils"
 
 
 function formatDate(dateStr: string): string {
@@ -60,7 +61,7 @@ export const columns: ColumnDef<TypeAssignment>[] = [
                 <div className="">Deadline</div>
             )
         },
-        cell: ({ row }) => <div className="capitalize">{formatDate(row.getValue("deadline"))}</div>,
+        cell: ({ row }) => <div className="capitalize">{convertTimestampToDate(row.getValue("deadline"))}</div>,
     },
     {
         accessorKey: "subject",
@@ -160,7 +161,7 @@ export const columns: ColumnDef<TypeAssignment>[] = [
                         <DropdownMenuLabel>Actions</DropdownMenuLabel>
 
                         <DropdownMenuItem><Link to={`/dashboard/customer/${assignment.customer_id}/query/${assignment.id}`}>Open Query</Link></DropdownMenuItem>
-                        <DropdownMenuItem onClick={() => handleFileDownload(assignment.id,assignment.file_name)}>Download Query</DropdownMenuItem>
+                        <DropdownMenuItem onClick={() => handleFileDownload(assignment.id, assignment.file_name)}>Download Query</DropdownMenuItem>
                         <DropdownMenuItem onClick={() => handleOrder(assignment.customer_id, assignment.id)}>Order</DropdownMenuItem>
                         <DropdownMenuSeparator />
 
@@ -170,9 +171,10 @@ export const columns: ColumnDef<TypeAssignment>[] = [
         },
     },
 ]
-const handleFileDownload = async (customerID: string,fileName:string) => {
+const handleFileDownload = async (customerID: string, fileName: string | null) => {
     const state = store.getState();
     const { token } = selectCurrentUser(state);
+    if (!fileName) return;
     try {
         const res = await fetch(`${import.meta.env.VITE_BASE_URL}/customer/download-query/${customerID}`, {
             method: "GET",

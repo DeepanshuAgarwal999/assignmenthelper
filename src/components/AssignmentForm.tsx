@@ -157,7 +157,7 @@ const AssignmentForm = () => {
     //   return;
     // }
 
-    const { files: file, agreeToTerms, ...values } = data;
+    const { files: file, agreeToTerms, deadline, ...values } = data;
     console.log(decoded_token.accountId)
     const query = JSON.stringify(
       { ...values, customer_id: decoded_token.accountId }
