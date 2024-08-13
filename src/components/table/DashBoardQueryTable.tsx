@@ -191,7 +191,7 @@ const handleFileDownload = async (customerID: string, fileName: string | null) =
             const downloadUrl = window.URL.createObjectURL(blob);
             const a = document.createElement('a');
             a.href = downloadUrl;
-            a.download = fileName; // You can set the file name here
+            a.download = fileName || 'query.pdf'; // You can set the file name here
             document.body.appendChild(a);
             a.click();
             a.remove();
