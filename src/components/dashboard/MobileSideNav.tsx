@@ -5,11 +5,12 @@ import { classNames } from './LeftSidebar'
 import { ArrowLeftEndOnRectangleIcon, Bars3Icon, ChevronDownIcon, XMarkIcon } from '@heroicons/react/24/outline'
 import { Link, NavLink, useNavigate } from 'react-router-dom'
 import Logo from '/assets/images/logo.jpg'
-import { useDispatch } from 'react-redux'
-import { logOut } from '@/redux/slices/user.slice'
+import { useDispatch, useSelector } from 'react-redux'
+import { logOut, selectCurrentUser } from '@/redux/slices/user.slice'
 import { toast } from 'react-toastify'
 import { Popover, PopoverContent, PopoverTrigger } from '../ui/popover'
 import { KeyRoundIcon } from 'lucide-react'
+import { generateColor } from '../utils/generateColor'
 
 
 const MobileSideNav = () => {
@@ -21,6 +22,8 @@ const MobileSideNav = () => {
         toast.success("Logout Successfully")
         navigate('/')
     }
+    const { userInfo } = useSelector(selectCurrentUser)
+    const userName = userInfo?.name
     return (
         <div>
             <Transition.Root show={sidebarOpen} as={Fragment}>
@@ -47,7 +50,7 @@ const MobileSideNav = () => {
                             leaveFrom="translate-x-0"
                             leaveTo="-translate-x-full"
                         >
-                            <Dialog.Panel className="relative mr-16 flex w-full max-w-xs flex-1">
+                            <Dialog.Panel className="relative mr-16 flex w-full max-w-[240px] flex-1">
                                 <Transition.Child
                                     as={Fragment}
                                     enter="ease-in-out duration-300"
@@ -57,8 +60,8 @@ const MobileSideNav = () => {
                                     leaveFrom="opacity-100"
                                     leaveTo="opacity-0"
                                 >
-                                    <div className="absolute left-full top-0 flex w-16 justify-center pt-5">
-                                        <button type="button" className="-m-2.5 p-2.5" onClick={() => setSidebarOpen(false)}>
+                                    <div className="absolute left-full top-0 flex w-16 justify-center pt-4">
+                                        <button type="button" className="-m-3.5 p-2.5" onClick={() => setSidebarOpen(false)}>
                                             <span className="sr-only">Close sidebar</span>
                                             <XMarkIcon className="h-6 w-6 text-white" aria-hidden="true" />
                                         </button>
@@ -140,30 +143,26 @@ const MobileSideNav = () => {
                     </div>
                 </Dialog>
             </Transition.Root>
-            <div className="sticky top-0 z-40 flex items-center gap-x-6 bg-white px-4 py-4 shadow-sm sm:px-6 lg:hidden">
+            <div className="sticky top-0 z-40 flex items-center gap-x-2 bg-white px-4 py-4 shadow-sm sm:px-6 lg:hidden">
                 <button type="button" className="-m-2.5 p-2.5 text-gray-700 lg:hidden" onClick={() => setSidebarOpen(true)}>
                     <span className="sr-only">Open sidebar</span>
                     <Bars3Icon className="h-6 w-6" aria-hidden="true" />
                 </button>
                 <div className="flex-1 text-sm font-semibold leading-6 text-gray-900">Dashboard</div>
-                <a href="#">
-                    <span className="sr-only">Your profile</span>
-                    <img
-                        className="h-8 w-8 rounded-full bg-gray-50"
-                        src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
-                        alt=""
-                    />
-                </a>
-            <Popover >
-                <PopoverTrigger><ChevronDownIcon className={'text-gray-800  size-4 shrink-0'} />
-                </PopoverTrigger>
-                <PopoverContent className='mr-2 mt-4 w-56 lg:hidden'>
-                    <div className='flex flex-col gap-2'>
-                        <button onClick={handleLogout} className='flex items-center gap-2 active:text-red-500 ease-in-out duration-150'><ArrowLeftEndOnRectangleIcon className='size-5' />Log Out</button>
+                <p className='text-sm'>{userName}</p>
+                <article className='h-8 w-8 rounded-full flex items-center justify-center text-white' style={{ backgroundColor: generateColor(userName!.length) }}>
+                    {userName![0]}
+                </article>
+                <Popover >
+                    <PopoverTrigger><ChevronDownIcon className={'text-gray-800  size-4 shrink-0'} />
+                    </PopoverTrigger>
+                    <PopoverContent className='mr-2 mt-4 w-56 lg:hidden'>
+                        <div className='flex flex-col gap-2'>
+                            <button onClick={handleLogout} className='flex items-center gap-2 active:text-red-500 ease-in-out duration-150'><ArrowLeftEndOnRectangleIcon className='size-5' />Log Out</button>
                             <button onClick={() => navigate('/change-password')} className='flex items-center gap-2 active:text-yellow-500 ease-in-out duration-150'><KeyRoundIcon className='size-5' />Change password</button>
-                    </div>
-                </PopoverContent>
-            </Popover>
+                        </div>
+                    </PopoverContent>
+                </Popover>
             </div>
 
         </div>

@@ -7,11 +7,12 @@ import {
 } from "@/components/ui/popover"
 import { ChevronDownIcon } from '@heroicons/react/24/outline'
 import { ArrowLeftEndOnRectangleIcon } from '@heroicons/react/20/solid'
-import { useDispatch } from 'react-redux'
-import { logOut } from '@/redux/slices/user.slice'
+import { useDispatch, useSelector } from 'react-redux'
+import { logOut, selectCurrentUser } from '@/redux/slices/user.slice'
 import { toast } from 'react-toastify'
 import { useNavigate } from 'react-router-dom'
 import { KeyRoundIcon } from 'lucide-react'
+import { generateColor } from '../utils/generateColor'
 
 const DashNavBar = () => {
     const dispatch = useDispatch();
@@ -21,12 +22,15 @@ const DashNavBar = () => {
         toast.success("Logout Successfully")
         navigate('/')
     }
-
+    const { userInfo } = useSelector(selectCurrentUser)
+    const userName = userInfo?.name
     return (
-        <div className='max-lg:hidden fixed xl:pl-72 py-4 w-full border-b border-gray-200 bg-white px-6'>
+        <div className='max-lg:hidden fixed xl:pl-56 py-4 w-full border-b border-gray-200 bg-white px-6 z-40'>
             <div className='flex items-center gap-2 justify-end '>
-                <p>Jack</p>
-                <img src={user} className='rounded-full size-8' />
+                <p>{userInfo?.name}</p>
+                <article className='h-8 w-8 rounded-full flex items-center justify-center text-white' style={{ backgroundColor: generateColor(userName!.length) }}>
+                    {userName![0]}
+                </article>
                 <Popover>
                     <PopoverTrigger><ChevronDownIcon className={'text-gray-800  size-4 shrink-0'} />
                     </PopoverTrigger>

@@ -7,9 +7,9 @@ import useDelayedLoader from './components/hooks/useDelayedLoader';
 
 import Student from './components/dashboard/Student';
 import Orders from './components/dashboard/Orders';
-import OpenQuery from './components/dashboard/OpenQuery';
 import ChangeUserPassword from './pages/ChangeUserPassword';
 import ResetPassword from './components/ResetPassword';
+import OrderDetails from './components/dashboard/OrderDetails';
 
 
 const RefundPolicy = lazy(() => import('./pages/policypages/RefundPolicy'));
@@ -68,7 +68,7 @@ const Routers = () => {
         {/* Dashboard routes */}
         <Route path='/dashboard' element={<DashboardLayout>{<><Student /></>}</DashboardLayout>} />
         <Route path='/dashboard/orders' element={<DashboardLayout>{<><Orders /></>}</DashboardLayout>} />
-        <Route path='/dashboard/customer/:customerId/query/:id' element={<DashboardLayout>{<><OpenQuery /></>}</DashboardLayout>} />
+        <Route path='/dashboard/customer/:customerId/order/:id' element={<DashboardLayout>{<><OrderDetails /></>}</DashboardLayout>} />
 
 
 

@@ -22,7 +22,7 @@ declare interface UserTokenInfo {
   exp: number;
   iat: number;
   scope: string;
-  account_name?: string;
+  name?: string;
 }
 
 declare interface UserState {

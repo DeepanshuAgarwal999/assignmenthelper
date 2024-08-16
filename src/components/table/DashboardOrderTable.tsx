@@ -83,13 +83,13 @@ export type TypeOrderDetails = {
     order_type: null | string,
     order_status: OrderStatus,
     re_workable: boolean,
-    order_datetime: string,
     modification_datetime: null | string
+    order_datetime: number,
 }
 
 
 export const columns: ColumnDef<TypeOrderDetails>[] = [
-   
+
     {
         accessorKey: "order_datetime",
         header: () => {
