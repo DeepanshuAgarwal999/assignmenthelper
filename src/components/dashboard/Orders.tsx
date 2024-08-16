@@ -1,9 +1,6 @@
 import React from 'react'
-import { DashBoardOrderTable } from '../table/DashboardOrderTable'
 import useGetOrders from '../hooks/useGetOrders'
 import DashboardLoader from '../shared/DashboardLoader';
-import { Card } from '../ui/card';
-import { Separator } from '../ui/separator';
 import { useNavigate } from 'react-router-dom';
 
 const Orders = () => {
