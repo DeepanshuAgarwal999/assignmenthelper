@@ -32,14 +32,11 @@ const PaymentDetails = ({ order }: { order: TypeOrderDetails }) => {
             }
         })()
     }, [])
-    console.log("hi")
+   
 
     const handlePayment = async (paymentId: string) => {
         try {
-            const { response, status, data } = await fetchService.get(`/customer/pay-now/${paymentId}`)
-            console.log(response)
-            console.log(data)
-
+            await axiosInstance.get(`/customer/pay-now/${paymentId}`)
         } catch (error) {
             console.log(error)
         }
