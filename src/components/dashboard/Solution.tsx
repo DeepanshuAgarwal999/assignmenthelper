@@ -22,7 +22,7 @@ const Solution = ({ order }: { order: TypeOrderDetails }) => {
             const downloadUrl = window.URL.createObjectURL(blob);
             const a = document.createElement('a');
             a.href = downloadUrl;
-            a.download = 'query.pdf'; // You can set the file name here
+            a.download = 'solution.pdf'; // You can set the file name here
             document.body.appendChild(a);
             a.click();
             a.remove();
