@@ -26,7 +26,7 @@ const userSlice = createSlice({
     logOut: (state) => {
       state.token = null;
       state.userType = null;
-      state.refresh_token = null;
+      // state.refresh_token = null;
       state.userInfo = null;
       localStorage.clear();
       // window.location.href = "/";

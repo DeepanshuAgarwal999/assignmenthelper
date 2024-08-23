@@ -72,7 +72,6 @@ const Login = () => {
             if (resdata.ok && res.data && res.data.token) {
 
                 const userToken = jwtDecode<UserTokenInfo>(res.data.token)
-
                 dispatch(setCredentials({ token: res.data.token, userType: "app_user", userInfo: userToken }))
                 toast.success("Login Successfully")
                 navigate(prevState || '/')

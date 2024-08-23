@@ -3,6 +3,7 @@ import { fetchService } from '../utils/fetch.service';
 import { Card, CardContent, CardFooter, CardHeader, CardTitle } from '../ui/card';
 import GradientButton from '../inputs/GradientButton';
 import { TypeOrderDetails } from '../table/DashboardOrderTable';
+import { axiosInstance } from '../utils/axios.instance';
 
 const Solution = ({ order }: { order: TypeOrderDetails }) => {
 
@@ -12,18 +13,20 @@ const Solution = ({ order }: { order: TypeOrderDetails }) => {
         // if (!fileName) return;
         try {
             setIsLoading(true)
-            const { response, status } = await fetchService.download(`/customer/download-solution/${order.order_id}`)
+            const response = await axiosInstance.get(`/customer/download-solution/${order.order_id}`, {
+                responseType: "blob"
+            })
 
-            if (status === 200) {
-                const blob = await response.blob();
-                const downloadUrl = window.URL.createObjectURL(blob);
-                const a = document.createElement('a');
-                a.href = downloadUrl;
-                a.download = 'query.pdf'; // You can set the file name here
-                document.body.appendChild(a);
-                a.click();
-                a.remove();
-            }
+
+            const blob = response.data;
+            const downloadUrl = window.URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = downloadUrl;
+            a.download = 'query.pdf'; // You can set the file name here
+            document.body.appendChild(a);
+            a.click();
+            a.remove();
+            window.URL.revokeObjectURL(downloadUrl);
             // console.log(data)
         }
         catch (error) {

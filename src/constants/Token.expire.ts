@@ -8,7 +8,7 @@ const isTokenExpired = (): boolean => {
   try {
     if (userType === "app_user") {
       const decodedToken = jwtDecode(token);
-      const currentTime = Date.now() / 1000;
+      const currentTime = Math.floor(Date.now() / 1000);
       if (decodedToken.exp && decodedToken.exp < currentTime) {
         // dispatch(logOut());
         return true;
